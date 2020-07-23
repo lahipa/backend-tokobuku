@@ -11,10 +11,12 @@ Model.init(
       primaryKey: true, // init primary key
       autoIncrement: true, // init auto increment
     },
-    name: Sequelize.STRING(256),
-    username: Sequelize.STRING(50),
-    password: Sequelize.STRING(192),
-    email: Sequelize.STRING(256),
+    order_id: Sequelize.INTEGER(11),
+    buku_id: Sequelize.INTEGER(11),
+    title: Sequelize.STRING(256),
+    quantity: Sequelize.INTEGER(20),
+    price: Sequelize.INTEGER(20),
+    total: Sequelize.INTEGER(20),
     created_at: Sequelize.DATE, // init database DATETIME
     updated_at: Sequelize.DATE,
     deleted_at: Sequelize.DATE,
@@ -28,8 +30,8 @@ Model.init(
     paranoid: true, // opsi untuk paranoid
     underscored: true,
     sequelize: connection,
-    modelName: "users",
-    tableName: "users",
+    modelName: "orders_detail",
+    tableName: "orders_detail",
   }
 );
 
