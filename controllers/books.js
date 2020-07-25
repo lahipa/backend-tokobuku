@@ -4,7 +4,8 @@ const { restore } = require("../models/books");
 
 const create = async (req, res) => {
   try {
-    const params = req.body;
+    //const params = req.body;
+    const params = { ...req.body, ...{ image_url: req.file.path } };
     const data = await books.create(params);
 
     return res.status(200).send({
@@ -48,7 +49,8 @@ const get_by_id = async (req, res) => {
 
 const update_by_id = async (req, res) => {
   try {
-    const params = req.body;
+    //const params = req.body;
+    const params = { ...req.body, ...{ image_url: req.file.path } };
     const data = await books.findByPk(req.params.id);
 
     if (!data) {

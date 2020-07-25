@@ -12,6 +12,7 @@ Model.init(
       autoIncrement: true, // init auto increment
     },
     user_id: Sequelize.INTEGER(11),
+    buku_id: Sequelize.INTEGER(11),
     total: Sequelize.INTEGER(20),
     created_at: Sequelize.DATE, // init database DATETIME
     updated_at: Sequelize.DATE,
