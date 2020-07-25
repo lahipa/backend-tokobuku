@@ -50,7 +50,8 @@ const get_by_id = async (req, res) => {
 const update_by_id = async (req, res) => {
   try {
     //const params = req.body;
-    const params = { ...req.body, ...{ image_url: req.file.path } };
+    const params = { ...req.body };
+    if (req.file && req.file.path) params.image_url = req.file.path;
     const data = await books.findByPk(req.params.id);
 
     if (!data) {
