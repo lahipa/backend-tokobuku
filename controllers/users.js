@@ -1,39 +1,6 @@
-const { users } = require("../models");
+const { users, usersRole } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
-/* 
-const getAll = async (req, res) => {
-  try {
-    const get = await users.findAll();
-    return res.status(200).send({
-      data: get,
-    });
-  } catch (err) {
-    return res.status(400).send({
-      message: err.massage,
-    });
-  }
-}; */
-
-/* const createUser = async (req, res) => {
-  try {
-    //record data dari body di frontend
-    const params = req.body;
-
-    //insert record ke dalam database
-    const resp = await users.create(params);
-
-    return res.status(200).send({
-      message: "OK",
-      data: resp,
-    });
-  } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
-  }
-}; */
 
 const register = async (req, res) => {
   try {
@@ -70,11 +37,17 @@ const login = async (req, res) => {
   try {
     const params = req.body;
 
-    // cari user berdasarkan username, jika tidak di temukan akan di tolak
+    // cari user berdasarkan username
     const query = {
       where: {
         username: params.username,
       },
+      include: [
+        {
+          model: usersRole,
+          as: "role",
+        },
+      ],
       raw: true, // return JSON dari sequelize
     };
 
@@ -86,8 +59,7 @@ const login = async (req, res) => {
       });
     }
 
-    // jika user di temukan, kita compare antara password yang di input dengan database
-    // jika tidak sama,, akan di tolak
+    // compare username dengan password
     const compare_password = bcrypt.compareSync(params.password, user.password);
     if (!compare_password) {
       return res.status(400).send({
@@ -95,8 +67,7 @@ const login = async (req, res) => {
       });
     }
 
-    // karena user di temukan dan password sama dengan database
-    // process selanjutkan adalah membuat token untuk users
+    // token option untuk digenerate
     const sign_token = {
       issuer: "contoh.com",
       subject: "contoh.com",
@@ -108,7 +79,6 @@ const login = async (req, res) => {
     // generate token berdasarkan data user dari database
     const token = jwt.sign(user, process.env.JWT_SECRET, sign_token);
 
-    // return hasil
     return res.status(200).send({
       message: "OK",
       data: {

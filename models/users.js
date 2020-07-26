@@ -11,6 +11,7 @@ Model.init(
       primaryKey: true, // init primary key
       autoIncrement: true, // init auto increment
     },
+    role_id: Sequelize.INTEGER(11),
     name: Sequelize.STRING(256),
     username: Sequelize.STRING(50),
     password: Sequelize.STRING(192),

@@ -1,11 +1,13 @@
 const express = require("express");
+const helmet = require("helmet");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const routes = require("./routes");
 const app = express();
 const port = 4000;
 
-const routes = require("./routes");
+app.use(helmet());
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", routes.users);
+app.use("/users-role", routes.usersRole);
 app.use("/books", routes.books);
 app.use("/kategori", routes.kategori);
 app.use("/orders", routes.orders);
