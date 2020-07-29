@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 26, 2020 at 03:25 PM
+-- Generation Time: Jul 29, 2020 at 06:10 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -52,6 +52,22 @@ INSERT INTO `buku` (`id`, `kategori_id`, `title`, `harga`, `author`, `image_url`
 (3, 1, 'Cinta Brontosaurus', 120000, 'Raditya Dika', 'public/asset/images/2020-07-24T14:46:46.414Z-yoga-profil.jpeg', 'AA500', 120, 'efguiorhgiorjierigjrighrihIEHFuheoaiwjdaiwhugfheruhuaheuahduwuhgfueiajdia', '2020-07-24 14:46:46', '2020-07-24 14:46:46', NULL),
 (4, 1, 'Merana Tanpa Akhir', 125000, 'Yoga Lahipa', 'public/asset/images/2020-07-25T03:47:37.222Z-yoga-profil.jpeg', 'AB3303', 100, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:47:37', '2020-07-25 04:50:43', NULL),
 (5, 2, 'Pencari Cinta', 125000, 'Yoga Lahipa', 'public/asset/images/2020-07-25T03:59:51.516Z-yoga-profil.jpeg', 'AB3303', 100, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:59:51', '2020-07-25 03:59:51', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `buku_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -190,6 +206,14 @@ ALTER TABLE `buku`
   ADD KEY `idx_kategori_id` (`kategori_id`);
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_user_id` (`user_id`),
+  ADD KEY `idx_buku_id` (`buku_id`);
+
+--
 -- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
@@ -235,6 +259,12 @@ ALTER TABLE `buku`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
@@ -273,6 +303,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `buku`
   ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `kategori` (`id`);
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`buku_id`) REFERENCES `buku` (`id`);
 
 --
 -- Constraints for table `orders`

@@ -2,6 +2,7 @@ const users = require("./users");
 const usersRole = require("./users_role");
 const kategori = require("./kategori");
 const books = require("./books");
+const cart = require("./cart");
 const orders = require("./orders");
 const ordersDetail = require("./ordersDetail");
 
@@ -16,6 +17,14 @@ kategori.hasMany(books, { foreignKey: "kategori_id", as: "books" });
 // relasi tabel orders dengan users
 orders.belongsTo(users, { foreignKey: "user_id", as: "customers_detail" });
 users.hasMany(orders, { foreignKey: "user_id", as: "orders" });
+
+// relasi tabel cart dengan users
+cart.belongsTo(users, { foreignKey: "user_id", as: "customers_detail" });
+users.hasMany(cart, { foreignKey: "user_id", as: "cart" });
+
+// relasi tabel cart dengan books
+cart.belongsTo(books, { foreignKey: "user_id", as: "books" });
+books.hasMany(cart, { foreignKey: "user_id", as: "books" });
 
 // relasi tabel orders dengan books
 // orders.belongsTo(books, { foreignKey: "buku_id", as: "buku" });
@@ -34,6 +43,7 @@ module.exports = {
   users,
   kategori,
   books,
+  cart,
   orders,
   ordersDetail,
 };
