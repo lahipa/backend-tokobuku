@@ -80,9 +80,13 @@ const login = async (req, res) => {
     const token = jwt.sign(user, process.env.JWT_SECRET, sign_token);
 
     return res.status(200).send({
-      message: "OK",
+      message: "login berhasil",
       data: {
-        user,
+        user: {
+          name: user.name,
+          email: user.email,
+          role: user["role.name"],
+        },
         token,
       },
     });
