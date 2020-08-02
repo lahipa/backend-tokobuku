@@ -55,6 +55,7 @@ const login = async (req, res) => {
 
     if (!user) {
       return res.status(400).send({
+        isLogin: false,
         message: "username tidak ditemukan",
       });
     }
@@ -63,6 +64,7 @@ const login = async (req, res) => {
     const compare_password = bcrypt.compareSync(params.password, user.password);
     if (!compare_password) {
       return res.status(400).send({
+        isLogin: false,
         message: "password tidak sama",
       });
     }
@@ -80,6 +82,7 @@ const login = async (req, res) => {
     const token = jwt.sign(user, process.env.JWT_SECRET, sign_token);
 
     return res.status(200).send({
+      isLogin: true,
       message: "login berhasil",
       data: {
         user: {
@@ -92,6 +95,7 @@ const login = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).send({
+      isLogin: false,
       message: err.message,
     });
   }
