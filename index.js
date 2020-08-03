@@ -25,6 +25,7 @@ app.use("/users", routes.users);
 app.use("/users-role", routes.usersRole);
 app.use("/books", routes.books);
 app.use("/kategori", routes.kategori);
+app.use("/cart", routes.cart);
 app.use("/orders", routes.orders);
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));

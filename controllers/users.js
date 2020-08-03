@@ -11,6 +11,7 @@ const register = async (req, res) => {
     const duplicated = await users.findOne({
       where: { username: params.username },
     });
+
     if (duplicated) {
       return res.status(400).send({
         message: "username telah terpakai",
