@@ -45,16 +45,7 @@ const add_to_cart = async (req, res) => {
 const subtract_from_cart = async (req, res) => {
   try {
     const params = req.body;
-
-    const query = {
-      where: {
-        buku_id: params.buku_id,
-        user_id: params.user_id,
-      },
-    };
-
-    // cek data, jika exist update qty
-    const data = await cart.findOne(query);
+    const data = await cart.findByPk(req.params.id);
 
     if (!data) {
       return res.status(400).send({
@@ -90,7 +81,32 @@ const subtract_from_cart = async (req, res) => {
   }
 };
 
-const get_cart_by_user = async (req, res) => {
+const delete_cart_list = async (req, res) => {
+  try {
+    const params = req.body;
+    const data = await cart.findByPk(req.params.id);
+
+    if (!data) {
+      return res.status(400).send({
+        message: "Data tidak ditemukan",
+      });
+    }
+
+    data.destroy();
+    data.save();
+
+    return res.status(200).send({
+      message: "OK",
+      data,
+    });
+  } catch (err) {
+    return res.status(400).send({
+      message: err.message,
+    });
+  }
+};
+
+const get_cart_list = async (req, res) => {
   try {
     const params = req.query;
 
@@ -129,39 +145,6 @@ const get_cart_by_user = async (req, res) => {
   }
 };
 
-const remove_from_cart = async (req, res) => {
-  try {
-    const params = req.query;
-
-    const query = {
-      where: {
-        buku_id: params.bid,
-        user_id: params.uid,
-      },
-    };
-
-    const data = await cart.findOne(query);
-
-    if (!data) {
-      return res.status(400).send({
-        message: "Data tidak ditemukan",
-      });
-    }
-
-    data.destroy();
-    data.save();
-
-    return res.status(200).send({
-      message: "OK",
-      data,
-    });
-  } catch (err) {
-    return res.status(400).send({
-      message: err.message,
-    });
-  }
-};
-
 /* const get_list = async(req, res) => {
     try {
         const params = req.query
@@ -177,8 +160,8 @@ const remove_from_cart = async (req, res) => {
 } */
 
 module.exports = {
-  get_cart_by_user,
+  get_cart_list,
   add_to_cart,
   subtract_from_cart,
-  remove_from_cart,
+  delete_cart_list,
 };

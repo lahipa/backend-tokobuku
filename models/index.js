@@ -23,8 +23,8 @@ cart.belongsTo(users, { foreignKey: "user_id", as: "customers_detail" });
 users.hasMany(cart, { foreignKey: "user_id", as: "cart" });
 
 // relasi tabel cart dengan books
-cart.belongsTo(books, { foreignKey: "user_id", as: "books" });
-books.hasMany(cart, { foreignKey: "user_id", as: "books" });
+cart.belongsTo(books, { foreignKey: "buku_id", as: "books" });
+books.hasMany(cart, { foreignKey: "buku_id", as: "books" });
 
 // relasi tabel orders dengan books
 // orders.belongsTo(books, { foreignKey: "buku_id", as: "buku" });

@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
   });
 });
 
+app.use("/uploads", express.static("uploads"));
 app.use("/users", routes.users);
 app.use("/users-role", routes.usersRole);
 app.use("/books", routes.books);
