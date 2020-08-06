@@ -4,9 +4,6 @@ const app = express.Router();
 const { kategori } = require("../controllers");
 const auth = require("../config/authMiddleware");
 
-//app.post("/", kategori.create);
-//app.put("/:id", kategori.update_by_id);
-//app.delete("/:id", kategori.delete_by_id);
 app.get("/", kategori.get_list);
 app.get("/:id", kategori.get_by_id);
 app.post("/", auth.userAuth, auth.checkRole, kategori.create); //only admins can create

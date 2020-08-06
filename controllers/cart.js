@@ -22,6 +22,7 @@ const add_to_cart = async (req, res) => {
 
       data.set(updateRow);
       data.save();
+      data.get();
 
       return res.status(200).send({
         message: "OK",

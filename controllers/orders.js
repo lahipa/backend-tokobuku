@@ -40,6 +40,7 @@ const get_by_id = async (req, res) => {
         },
       ],
     });
+
     if (!data) {
       return res.status(400).send({
         message: "ID tidak ditemukan",
