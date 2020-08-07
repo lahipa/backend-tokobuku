@@ -58,6 +58,41 @@ const get_by_id = async (req, res) => {
   }
 };
 
+// const get_list_by_uid = async (req, res) => {
+//   try {
+//     const params = req.query;
+
+//     const query = {
+//       where: {
+//         user_id: params.uid,
+//       },
+//       include: [
+//         {
+//           model: ordersDetail,
+//           as: "orders_detail",
+//         },
+//       ],
+//     };
+
+//     const data = await cart.findAll(query);
+
+//     if (!data) {
+//       return res.status(400).send({
+//         message: "Data tidak ditemukan",
+//       });
+//     }
+
+//     return res.status(200).send({
+//       message: "OK",
+//       data,
+//     });
+//   } catch (err) {
+//     return res.status(400).send({
+//       message: err.message,
+//     });
+//   }
+// };
+
 const get_list = async (req, res) => {
   try {
     const params = req.query;
@@ -79,6 +114,13 @@ const get_list = async (req, res) => {
         },
       ],
     };
+
+    if (params.uid) {
+      query.where.user_id = {
+        [Op.like]: `%${params.uid}%`,
+      };
+    }
+
     if (params.title) {
       query.where.user_id = {
         [Op.like]: `%${params.user_id}%`,
@@ -122,5 +164,6 @@ const get_list = async (req, res) => {
 module.exports = {
   create,
   get_by_id,
+  //get_list_by_uid,
   get_list,
 };

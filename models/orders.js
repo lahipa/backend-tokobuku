@@ -12,7 +12,6 @@ Model.init(
       autoIncrement: true, // init auto increment
     },
     user_id: Sequelize.INTEGER(11),
-    transaction_id: Sequelize.STRING(150),
     total: Sequelize.INTEGER(20),
     total_price: Sequelize.INTEGER(20),
     created_at: Sequelize.DATE, // init database DATETIME
