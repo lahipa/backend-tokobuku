@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 13, 2020 at 02:47 AM
+-- Generation Time: Aug 13, 2020 at 12:35 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -36,6 +36,7 @@ CREATE TABLE `buku` (
   `image_url` varchar(150) NOT NULL,
   `no_isbn` varchar(50) NOT NULL,
   `berat` int(15) NOT NULL,
+  `stok` int(15) NOT NULL DEFAULT 0,
   `synopsis` mediumtext NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
@@ -46,14 +47,14 @@ CREATE TABLE `buku` (
 -- Dumping data for table `buku`
 --
 
-INSERT INTO `buku` (`id`, `kategori_id`, `title`, `harga`, `author`, `image_url`, `no_isbn`, `berat`, `synopsis`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 2, 'Kambing Jantan', 150000, 'Raditya Dika', 'uploads/asset/images/Book-cover-page-2-CRC.png', 'AB3301', 150, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-23 16:12:03', '2020-08-05 12:33:53', NULL),
-(2, 1, 'Kambing Betina', 130000, 'Raditya Dika', 'uploads/asset/images/ikan-cabe.jpg', 'AB3302', 150, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-24 14:01:15', '2020-08-05 12:34:06', NULL),
-(3, 1, 'Cinta Brontosaurus', 120000, 'Raditya Dika', 'uploads/asset/images/2020-07-24T14:46:46.414Z-yoga-profil.jpeg', 'AA500', 120, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-24 14:46:46', '2020-08-04 22:52:26', NULL),
-(4, 1, 'Merana Tanpa Akhir', 125000, 'Yoga Lahipa', 'uploads/asset/images/2020-07-25T03:47:37.222Z-yoga-profil.jpeg', 'AB3303', 100, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:47:37', '2020-08-04 22:26:30', NULL),
-(5, 2, 'Pencari Cinta', 125000, 'Yoga Lahipa', 'uploads/asset/images/2020-07-25T03:59:51.516Z-yoga-profil.jpeg', 'AB3303', 100, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:59:51', '2020-08-04 22:26:39', NULL),
-(6, 4, 'Kambing Muda Berjalan', 210000, 'Yoga Lahipa', 'uploads/asset/images/image_url-1596520000986.png', 'AC330', 333, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-08-04 05:46:41', '2020-08-04 22:52:34', NULL),
-(7, 5, 'Bukan Untuk Dibaca Oleh Pemula!', 175000, 'Mike Portnoy', 'uploads/asset/images/image_url-1596558953752.png', '777CC', 115, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-08-04 16:35:53', '2020-08-13 00:15:03', NULL);
+INSERT INTO `buku` (`id`, `kategori_id`, `title`, `harga`, `author`, `image_url`, `no_isbn`, `berat`, `stok`, `synopsis`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 'Kambing Jantan', 150000, 'Raditya Dika', 'uploads/asset/images/Book-cover-page-2-CRC.png', 'AB3301', 150, 9, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-23 16:12:03', '2020-08-13 10:32:31', NULL),
+(2, 1, 'Kambing Betina', 130000, 'Raditya Dika', 'uploads/asset/images/ikan-cabe.jpg', 'AB3302', 150, 10, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-24 14:01:15', '2020-08-13 09:22:52', NULL),
+(3, 1, 'Cinta Brontosaurus', 120000, 'Raditya Dika', 'uploads/asset/images/2020-07-24T14:46:46.414Z-yoga-profil.jpeg', 'AA500', 120, 10, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-24 14:46:46', '2020-08-13 09:22:56', NULL),
+(4, 1, 'Merana Tanpa Akhir', 125000, 'Yoga Lahipa', 'uploads/asset/images/2020-07-25T03:47:37.222Z-yoga-profil.jpeg', 'AB3303', 100, 8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:47:37', '2020-08-13 10:32:31', NULL),
+(5, 2, 'Pencari Cinta', 125000, 'Yoga Lahipa', 'uploads/asset/images/2020-07-25T03:59:51.516Z-yoga-profil.jpeg', 'AB3303', 100, 10, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-07-25 03:59:51', '2020-08-13 17:29:25', NULL),
+(6, 4, 'Kambing Muda Berjalan', 210000, 'Yoga Lahipa', 'uploads/asset/images/image_url-1596520000986.png', 'AC330', 333, 10, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-08-04 05:46:41', '2020-08-13 09:23:07', NULL),
+(7, 5, 'Bukan Untuk Dibaca Oleh Pemula!', 175000, 'Mike Portnoy', 'uploads/asset/images/image_url-1596558953752.png', 'AD3213', 115, 7, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non aliquam enim. Donec dignissim interdum nisi, eget posuere est. In lectus neque, convallis id blandit quis, dictum in tellus. Quisque non diam dui. Vestibulum vitae velit quis turpis placerat auctor eget nec lacus.', '2020-08-04 16:35:53', '2020-08-13 10:34:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,8 +80,7 @@ INSERT INTO `cart` (`id`, `user_id`, `buku_id`, `qty`, `created_at`, `updated_at
 (1, 4, 3, 1, '2020-08-03 03:16:33', '2020-08-03 05:50:42', NULL),
 (5, 3, 1, 1, '2020-08-03 06:35:30', '2020-08-03 18:35:17', NULL),
 (37, 6, 7, 1, '2020-08-10 11:47:09', '2020-08-10 11:47:09', NULL),
-(38, 6, 6, 1, '2020-08-10 11:47:13', '2020-08-10 11:47:13', NULL),
-(46, 7, 5, 2, '2020-08-12 18:17:21', '2020-08-12 18:20:27', NULL);
+(38, 6, 6, 1, '2020-08-10 11:47:13', '2020-08-10 11:47:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,10 @@ INSERT INTO `orders` (`id`, `user_id`, `transaction_id`, `total`, `total_price`,
 (20, 7, '_ccefurtcl', 2, 420000, 0, '2020-08-10 15:12:02', '2020-08-10 15:12:02', NULL),
 (21, 7, '_t2nzfcb41', 2, 300000, 0, '2020-08-10 15:13:04', '2020-08-10 15:13:04', NULL),
 (22, 7, '_vj03tye03', 1, 210000, 0, '2020-08-10 15:13:36', '2020-08-10 15:13:36', NULL),
-(23, 5, '_6z9mg3u0s', 2, 350000, 1, '2020-08-12 15:14:40', '2020-08-13 00:44:16', NULL);
+(23, 5, '_6z9mg3u0s', 2, 350000, 1, '2020-08-12 15:14:40', '2020-08-13 00:44:16', NULL),
+(24, 7, '_fdtg5kfxh', 3, 425000, 0, '2020-08-13 10:30:10', '2020-08-13 10:30:10', NULL),
+(25, 7, '_06sud0asm', 3, 400000, 0, '2020-08-13 10:32:31', '2020-08-13 10:32:31', NULL),
+(26, 7, '_p6trnb43r', 3, 525000, 0, '2020-08-13 10:34:03', '2020-08-13 10:34:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,12 @@ INSERT INTO `orders_detail` (`id`, `order_id`, `buku_id`, `title`, `quantity`, `
 (20, 21, 5, 'Pencari Cinta', 1, 125000, 125000, '2020-08-10 15:13:04', '2020-08-10 15:13:04', NULL),
 (21, 21, 7, 'Bukan Untuk Dibaca Oleh Pemula!', 1, 175000, 175000, '2020-08-10 15:13:04', '2020-08-10 15:13:04', NULL),
 (22, 22, 6, 'Kambing Muda Berjalan', 1, 210000, 210000, '2020-08-10 15:13:36', '2020-08-10 15:13:36', NULL),
-(23, 23, 7, 'Bukan Untuk Dibaca Oleh Pemula!', 2, 175000, 350000, '2020-08-12 15:14:40', '2020-08-12 15:14:40', NULL);
+(23, 23, 7, 'Bukan Untuk Dibaca Oleh Pemula!', 2, 175000, 350000, '2020-08-12 15:14:40', '2020-08-12 15:14:40', NULL),
+(24, 24, 7, 'Bukan Untuk Dibaca Oleh Pemula!', 1, 175000, 175000, '2020-08-13 10:30:10', '2020-08-13 10:30:10', NULL),
+(25, 24, 5, 'Pencari Cinta', 2, 125000, 250000, '2020-08-13 10:30:10', '2020-08-13 10:30:10', NULL),
+(26, 25, 4, 'Merana Tanpa Akhir', 2, 125000, 250000, '2020-08-13 10:32:31', '2020-08-13 10:32:31', NULL),
+(27, 25, 1, 'Kambing Jantan', 1, 150000, 150000, '2020-08-13 10:32:31', '2020-08-13 10:32:31', NULL),
+(28, 26, 7, 'Bukan Untuk Dibaca Oleh Pemula!', 3, 175000, 525000, '2020-08-13 10:34:03', '2020-08-13 10:34:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -292,7 +300,7 @@ ALTER TABLE `buku`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -304,13 +312,13 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `role`
