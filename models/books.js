@@ -18,6 +18,7 @@ Model.init(
     image_url: Sequelize.STRING(150),
     no_isbn: Sequelize.STRING(50),
     berat: Sequelize.INTEGER(15),
+    stok: Sequelize.INTEGER(15),
     /* book_status: Sequelize.ENUM({
       values: ["FOR_SELL", "NOT_FOR_SELL"],
     }), */

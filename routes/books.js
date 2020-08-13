@@ -56,7 +56,7 @@ const uploadAsync = util.promisify(upload.single("image_url"));
 app.get("/", books.get_list);
 app.get("/:id", books.get_by_id);
 app.post("/", auth.userAuth, auth.checkRole, uploadAsync, books.create);
-app.put("/:id", auth.userAuth, auth.checkRole, uploadAsync, books.update_by_id);
+app.put("/:id", auth.userAuth, uploadAsync, books.update_by_id);
 app.delete("/:id", auth.userAuth, auth.checkRole, books.delete_by_id);
 
 module.exports = app;
