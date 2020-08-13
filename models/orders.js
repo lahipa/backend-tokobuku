@@ -15,6 +15,7 @@ Model.init(
     transaction_id: Sequelize.STRING(150),
     total: Sequelize.INTEGER(20),
     total_price: Sequelize.INTEGER(20),
+    proceed: Sequelize.BOOLEAN(),
     created_at: Sequelize.DATE, // init database DATETIME
     updated_at: Sequelize.DATE,
     deleted_at: Sequelize.DATE,

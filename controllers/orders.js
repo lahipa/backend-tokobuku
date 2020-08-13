@@ -26,6 +26,32 @@ const create = async (req, res) => {
   }
 };
 
+const update_by_id = async (req, res) => {
+  try {
+    const params = req.body;
+    const data = await orders.findByPk(req.params.id);
+
+    if (!data) {
+      return res.status(400).send({
+        message: "ID tidak ditemukan",
+      });
+    }
+
+    data.set(params);
+    data.save();
+    data.get();
+
+    return res.status(200).send({
+      message: "OK",
+      data,
+    });
+  } catch (err) {
+    return res.status(400).send({
+      message: err.message,
+    });
+  }
+};
+
 const get_by_id = async (req, res) => {
   try {
     const data = await orders.findByPk(req.params.id, {
@@ -86,6 +112,12 @@ const get_list = async (req, res) => {
       };
     }
 
+    if (params.proceed) {
+      query.where.proceed = {
+        [Op.like]: `%${params.proceed}`,
+      };
+    }
+
     // Sorting
     if (params.sort_by && params.sort_type) {
       query.order = [[params.sort_by, params.sort_type]];
@@ -118,7 +150,7 @@ const get_list = async (req, res) => {
 
 module.exports = {
   create,
+  update_by_id,
   get_by_id,
-  //get_list_by_uid,
   get_list,
 };

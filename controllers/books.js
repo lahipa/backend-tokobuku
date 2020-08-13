@@ -118,6 +118,12 @@ const get_list = async (req, res) => {
       ],
     };
 
+    if (params.catid) {
+      query.where.kategori_id = {
+        [Op.like]: `%${params.catid}%`,
+      };
+    }
+
     if (params.title) {
       query.where.title = {
         [Op.like]: `%${params.title}%`,
