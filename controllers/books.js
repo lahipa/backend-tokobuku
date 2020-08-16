@@ -140,6 +140,10 @@ const get_list = async (req, res) => {
     if (params.sort_by && params.sort_type) {
       query.order = [[params.sort_by, params.sort_type]];
     }
+    // Sorting by relation
+    if (params.relate && params.sort_by && params.sort_type) {
+      query.order = [[params.relate, params.sort_by, params.sort_type]];
+    }
 
     // pagination
     if (params.limit) {

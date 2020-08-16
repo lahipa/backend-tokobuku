@@ -58,7 +58,7 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(400).send({
         isLogin: false,
-        message: "username tidak ditemukan",
+        message: "username / Password tidak ditemukan",
       });
     }
 
@@ -67,7 +67,7 @@ const login = async (req, res) => {
     if (!compare_password) {
       return res.status(400).send({
         isLogin: false,
-        message: "password tidak sama",
+        message: "username / password tidak sama",
       });
     }
 
