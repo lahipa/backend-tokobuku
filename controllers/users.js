@@ -15,7 +15,8 @@ const register = async (req, res) => {
 
     if (duplicated) {
       return res.status(400).send({
-        message: "username telah terpakai",
+        status: false,
+        message: "Username telah terpakai",
       });
     }
 
@@ -25,11 +26,13 @@ const register = async (req, res) => {
     const data = await users.create(params);
 
     return res.status(200).send({
-      message: "OK",
+      status: true,
+      message: "Pendaftaran user berhasil!",
       data,
     });
   } catch (err) {
     return res.status(400).send({
+      status: false,
       message: err.message,
     });
   }
@@ -57,8 +60,8 @@ const login = async (req, res) => {
 
     if (!user) {
       return res.status(400).send({
-        isLogin: false,
-        message: "username / Password tidak ditemukan",
+        status: false,
+        message: "username / Password tidak sama",
       });
     }
 
@@ -66,7 +69,7 @@ const login = async (req, res) => {
     const compare_password = bcrypt.compareSync(params.password, user.password);
     if (!compare_password) {
       return res.status(400).send({
-        isLogin: false,
+        status: false,
         message: "username / password tidak sama",
       });
     }
@@ -84,9 +87,9 @@ const login = async (req, res) => {
     const token = jwt.sign(user, process.env.JWT_SECRET, sign_token);
 
     return res.status(200).send({
-      message: "login berhasil",
-      isLogin: true,
-      role: user["role.name"],
+      status: true,
+      message: "Login berhasil!",
+      rlid: user.role_id,
       data: {
         user: {
           name: user.name,
@@ -99,7 +102,7 @@ const login = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).send({
-      isLogin: false,
+      status: false,
       message: err.message,
     });
   }
@@ -111,16 +114,19 @@ const get_by_id = async (req, res) => {
 
     if (!data) {
       return res.status(400).send({
+        status: false,
         message: "ID tidak ditemukan",
       });
     }
 
     return res.status(200).send({
+      status: true,
       message: "OK",
       data,
     });
   } catch (err) {
     return res.status(400).send({
+      status: false,
       message: err.message,
     });
   }
@@ -135,7 +141,8 @@ const update_by_id = async (req, res) => {
 
     if (!data) {
       return res.status(400).send({
-        message: "Data id tidak ditemukan",
+        status: false,
+        message: "Data tidak ditemukan!",
       });
     }
 
@@ -144,11 +151,13 @@ const update_by_id = async (req, res) => {
     data.get();
 
     return res.status(200).send({
-      message: "OK",
+      status: true,
+      message: "Data berhasil disimpan!",
       data,
     });
   } catch (err) {
     return res.status(400).send({
+      status: false,
       message: err.message,
     });
   }
@@ -161,7 +170,8 @@ const delete_by_id = async (req, res) => {
 
     if (!data) {
       return res.status(400).send({
-        message: "Data id tidak ditemukan",
+        status: false,
+        message: "Data tidak ditemukan",
       });
     }
 
@@ -169,11 +179,13 @@ const delete_by_id = async (req, res) => {
     data.save();
 
     return res.status(200).send({
-      message: "OK",
+      status: true,
+      message: "Data berhasil dihapus!",
       data,
     });
   } catch (err) {
     return res.status(400).send({
+      status: false,
       message: err.message,
     });
   }
@@ -229,11 +241,13 @@ const get_list = async (req, res) => {
     data.page = query.offset / query.limit + 1;
 
     return res.status(200).send({
-      message: "OK",
+      status: true,
+      message: "Data ditampilkan!",
       data,
     });
   } catch (err) {
     return res.status(400).send({
+      status: false,
       message: err.message,
     });
   }
