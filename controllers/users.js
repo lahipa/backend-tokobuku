@@ -3,6 +3,21 @@ const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+/**
+ * token option untuk digenerate
+ *
+ * algorithm, algoritma encryption (exp: "HS256", "HS384", "HS512", "PS256", and more)
+ * expiresIn, token expired time (exp: "1d", 1 hari)
+ *
+ */
+const sign_token = {
+  issuer: "contoh.com",
+  subject: "contoh.com",
+  algorithm: "HS256",
+  expiresIn: "1d",
+  audience: "http://contoh.com",
+};
+
 const register = async (req, res) => {
   try {
     //record data dari body di frontend
@@ -60,35 +75,39 @@ const login = async (req, res) => {
 
     if (!user) {
       return res.status(400).send({
-        status: false,
-        message: "username / Password tidak sama",
+        status: {
+          code: 400,
+          message: "username / password tidak sama",
+        },
       });
     }
 
-    // compare username dengan password
+    // compare password
     const compare_password = bcrypt.compareSync(params.password, user.password);
     if (!compare_password) {
       return res.status(400).send({
-        status: false,
-        message: "username / password tidak sama",
+        status: {
+          code: 400,
+          message: "username / password tidak sama",
+        },
       });
     }
 
-    // token option untuk digenerate
-    const sign_token = {
-      issuer: "contoh.com",
-      subject: "contoh.com",
-      algorithm: "HS256", // algoritma encryption
-      expiresIn: "1d", // token expired 1 hari
-      audience: "http://contoh.com",
+    const userData = {
+      namer: user.name,
+      nameu: user.username,
+      rli: user["role.id"],
+      rln: user["role.name"],
     };
 
     // generate token berdasarkan data user dari database
-    const token = jwt.sign(user, process.env.JWT_SECRET, sign_token);
+    const token = jwt.sign(userData, process.env.JWT_SECRET, sign_token);
 
     return res.status(200).send({
-      status: true,
-      message: "Login berhasil!",
+      status: {
+        code: 200,
+        message: "OK",
+      },
       rlid: user.role_id,
       data: {
         user: {
@@ -102,8 +121,45 @@ const login = async (req, res) => {
     });
   } catch (err) {
     return res.status(400).send({
-      status: false,
-      message: err.message,
+      status: {
+        code: 400,
+        message: err.message,
+      },
+    });
+  }
+};
+
+const tokenVerify = async (req, res) => {
+  try {
+    const data = await jwt.verify(
+      req.body.token,
+      process.env.JWT_SECRET,
+      sign_token
+    );
+
+    const query = {
+      where: {
+        username: data.nameu,
+      },
+      raw: true,
+    };
+
+    const user = await users.findOne(query);
+
+    if (!user) {
+      return res.status(400).send({
+        status: {
+          code: 400,
+          message: "User not found!",
+        },
+      });
+    }
+  } catch (err) {
+    return res.status(400).send({
+      status: {
+        code: 400,
+        message: err.message,
+      },
     });
   }
 };
@@ -114,20 +170,26 @@ const get_by_id = async (req, res) => {
 
     if (!data) {
       return res.status(400).send({
-        status: false,
-        message: "ID tidak ditemukan",
+        status: {
+          code: 400,
+          message: "ID tidak ditemukan",
+        },
       });
     }
 
     return res.status(200).send({
-      status: true,
-      message: "OK",
+      status: {
+        code: 200,
+        message: "OK",
+      },
       data,
     });
   } catch (err) {
     return res.status(400).send({
-      status: false,
-      message: err.message,
+      status: {
+        code: 400,
+        message: err.message,
+      },
     });
   }
 };
@@ -136,13 +198,19 @@ const update_by_id = async (req, res) => {
   try {
     //const params = req.body;
     const params = { ...req.body };
-    if (req.file && req.file.path) params.image_url = req.file.path;
+
+    if (req.file && req.file.path) {
+      params.image_url = req.file.path;
+    }
+
     const data = await users.findByPk(req.params.id);
 
     if (!data) {
       return res.status(400).send({
-        status: false,
-        message: "Data tidak ditemukan!",
+        status: {
+          code: 400,
+          message: "Data tidak ditemukan!",
+        },
       });
     }
 
@@ -151,14 +219,18 @@ const update_by_id = async (req, res) => {
     data.get();
 
     return res.status(200).send({
-      status: true,
-      message: "Data berhasil disimpan!",
+      status: {
+        code: 200,
+        message: "Data berhasil disimpan",
+      },
       data,
     });
   } catch (err) {
     return res.status(400).send({
-      status: false,
-      message: err.message,
+      status: {
+        code: 400,
+        message: err.message,
+      },
     });
   }
 };
@@ -170,8 +242,10 @@ const delete_by_id = async (req, res) => {
 
     if (!data) {
       return res.status(400).send({
-        status: false,
-        message: "Data tidak ditemukan",
+        status: {
+          code: 400,
+          message: "Data tidak ditemukan!",
+        },
       });
     }
 
@@ -179,14 +253,18 @@ const delete_by_id = async (req, res) => {
     data.save();
 
     return res.status(200).send({
-      status: true,
-      message: "Data berhasil dihapus!",
+      status: {
+        code: 200,
+        message: "Data berhasil dihapus!",
+      },
       data,
     });
   } catch (err) {
     return res.status(400).send({
-      status: false,
-      message: err.message,
+      status: {
+        code: 400,
+        message: err.message,
+      },
     });
   }
 };
@@ -241,14 +319,18 @@ const get_list = async (req, res) => {
     data.page = query.offset / query.limit + 1;
 
     return res.status(200).send({
-      status: true,
-      message: "Data ditampilkan!",
+      status: {
+        code: 200,
+        message: "OK",
+      },
       data,
     });
   } catch (err) {
     return res.status(400).send({
-      status: false,
-      message: err.message,
+      status: {
+        code: 400,
+        message: err.message,
+      },
     });
   }
 };

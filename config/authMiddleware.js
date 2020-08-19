@@ -23,22 +23,23 @@ const userAuth = async (req, res, next) => {
     //console.log(data.username, "data from decoded userAuth middleware");
     const query = {
       where: {
-        username: data.username,
+        username: data.nameu,
       },
       raw: true,
     };
+
     const user = await users.findOne(query);
 
     if (!user) {
       return res.status(400).send({
-        message: "user not found",
+        message: "User not found!",
       });
     }
 
     return next();
   } catch (err) {
     return res.status(400).send({
-      message: "please login",
+      message: "You are not authorized!, Please login",
     });
   }
 };
@@ -52,11 +53,11 @@ const checkRole = async (req, res, next) => {
     );
 
     //console.log(data, "data from decoded checkRole middleware");
-    if (data["role.name"] === "admin") {
+    if (data.rli === 1 && data.rln === "admin") {
       return next();
     } else {
       return res.status(200).send({
-        message: "no authorization!!",
+        message: "Your account doesn't have privilege!",
       });
     }
   } catch (err) {
