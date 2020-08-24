@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const routes = require("./routes");
 const app = express();
-const port = 4000;
+const port = 80;
 
 // helmet is to enhance your API's security
 app.use(helmet());
@@ -47,4 +47,4 @@ app.use("/kategori", routes.kategori);
 app.use("/cart", routes.cart);
 app.use("/orders", routes.orders);
 
-app.listen(port, () => console.log(`listening at http://localhost:${port}`));
+app.listen(port, () => console.log(`listening at port:${port}`));
