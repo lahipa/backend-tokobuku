@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const routes = require("./routes");
 const app = express();
-const port = 80;
+const port = process.env.PORT || 4000;
 
 // helmet is to enhance your API's security
 app.use(helmet());
